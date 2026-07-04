@@ -1,0 +1,69 @@
+##BruteForce -- Time Limit exceeded
+class Solution(object):
+    def isAnagram(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        
+        if len(s)!=len(t):
+            return False
+    
+        s=list(s)
+        t=list(t)
+
+        for i in range(len(s)):
+            fl=0
+            for j in range(len(t)):
+                if s[i]==t[j]:
+                    t[j]=None
+                    fl=1
+                    break
+            if fl==0:
+                return False
+        return True
+
+
+
+##Hashmap
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        hm={}
+        for x in s:
+            if x in hm:
+                hm[x]+=1
+            else:
+                hm[x]=1
+
+        for x in t:
+            if x in hm:
+                hm[x]-=1
+            else:
+                return False
+        
+        for x in hm:
+            if hm[x]!=0:
+                return False
+        return True
+
+##Sorting Method
+class Solution(object):
+    def isAnagram(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        
+        if len(s)!=len(t):
+            return False
+
+        s=list(s)
+        t=list(t)
+        s.sort()
+        t.sort()
+        for i in range(len(s)):
+            if s[i]!=t[i]:
+                return False
+        return True
