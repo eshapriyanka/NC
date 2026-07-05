@@ -1,0 +1,34 @@
+Approach:
+encode and decode
+Encode: just pass the strings given in the question and return some string to decode func
+Decode: just takes the input given by the encode function
+
+--> 1. Tried seperating with a delimeter, but the problem is, what if the delimeter is also a part of the string. Then it would also act as seperator and return wrong string.
+--> 2. storing the lengths of given string elements in a new array. but we cant create a global array as decode function wont anyway accept any input other than return element from encode function.
+--> 3. putting the sizes of the strings infront of respectable strings in the encode function. such that, the beginning if the string would be a int value. So the int value will be the lenth of string to seperate the required string. But the problem arrives when the string also starts with integer. The logic fails as it considers the length inserted at the beginning of the string and the actaul nu,ber which is the start of the string would mix and mislead the logic.
+--> 4. So, when we put the length of the string followed by a seperator(a delimeter like #), the logic would understand that the integer is length which is divided by seperator, and then next l(length) no. of chars are considered as a single string.
+      ex: 2#WE3#ARE4#5#006#TELUGU6#CODER
+
+class Solution:
+
+    def encode(self, strs: List[str]) -> str:
+        s=""
+        for st in strs:
+            s+=str(len(st))
+            s+=("#")
+            s+=(st)
+        return s
+
+    def decode(self, s: str) -> List[str]:
+        i=0
+        res=[]
+        while i<len(s):
+            j=i
+            while s[j]!='#':
+                j+=1
+            l=int(s[i:j])
+            j+=1
+            newstr = s[j:j+l]
+            res.append(newstr)
+            i=j+l
+        return res
