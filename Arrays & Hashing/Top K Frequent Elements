@@ -1,0 +1,64 @@
+### 1. Hash Map + Sorting (Naive Approach)
+
+class Solution(object):
+    def topKFrequent(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        hm={}
+        for i in range(len(nums)):
+            if nums[i] in hm:
+                hm[nums[i]]+=1
+            else:
+                hm[nums[i]]=1
+        
+        hm1={}
+        maxval=0
+        for key,value in hm.items():
+            if value in hm1:
+                hm1[value].append(key)
+            else:
+                hm1[value]=[key]
+            
+            if value>maxval:
+                maxval=value
+
+        a=sorted(hm.items(), key=lambda x:x[1])
+        return [x[0] for x in a[-k:]]
+
+
+### Bucket Sort (using 2 HMs)
+
+class Solution(object):
+    def topKFrequent(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        hm={}
+        for i in range(len(nums)):
+            if nums[i] in hm:
+                hm[nums[i]]+=1
+            else:
+                hm[nums[i]]=1
+        
+        hm1={}
+        maxval=0
+        for key,value in hm.items():
+            if value in hm1:
+                hm1[value].append(key)
+            else:
+                hm1[value]=[key]
+            
+            if value>maxval:
+                maxval=value
+        res=[]
+        while maxval>0 and len(res)!=k:
+            if maxval in hm1:     
+                while hm1[maxval] and len(res)!= k:
+                    res.append(hm1[maxval].pop())
+            maxval-=1
+        return res
