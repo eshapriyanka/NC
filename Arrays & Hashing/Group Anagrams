@@ -1,0 +1,17 @@
+class Solution(object):
+    def groupAnagrams(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: List[List[str]]
+        """
+        hm={}
+        for st in strs:
+            st1=''.join(sorted(st))
+            if st1 in hm:
+                hm[st1].append(st)
+            else:
+                hm[st1]=[st]
+        res=[]
+        for key in hm:
+            res.append(hm[key])
+        return res
