@@ -1,0 +1,84 @@
+### Follow up: Can you solve the problem in O(1) extra space complexity? (The output array does not count as extra space for space complexity analysis.)
+for this, we just have  existing arrays, which are input & output array. So we can only use and modify them to complete in O(1) spacs complexity.
+class Solution(object):
+    def productExceptSelf(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        n=len(nums)
+        res=[1]*n
+
+        for i in range(1,n):
+            res[i]=res[i-1]*nums[i-1]
+
+        suff=1
+        for i in range(n-2,-1,-1):
+            suff*=nums[i+1]
+            res[i]*=suff
+        return res
+
+
+
+
+## prefix product and suffix product
+class Solution(object):
+    def productExceptSelf(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        n=len(nums)
+        res=[0]*n
+
+        prefix=[0]*n
+        prefix[0]=nums[0]
+        for i in range(1,n):
+            prefix[i]=prefix[i-1]*nums[i]
+
+        
+        suffix=[0]*n
+        suffix[n-1]=nums[n-1]
+        for i in range(n-2,-1,-1):
+            suffix[i]=suffix[i+1]*nums[i]
+        res[0]=suffix[1]
+        res[n-1]=prefix[n-2]
+        for i in range(1,n-1):
+            res[i]=prefix[i-1]*suffix[i+1]
+        return res
+
+
+
+
+
+
+## BruteForce --  nut TLE in LC
+
+1.class Solution:
+      def productExceptSelf(self, nums: List[int]) -> List[int]:
+          res=[]
+          for i in range(len(nums)):
+              pro=1
+              for j in range(i+1,len(nums)):
+                  pro*=nums[j]
+              if i!=0:
+                  for k in range(0,i):
+                      pro*=nums[k]
+              res.append(pro)
+          return res
+
+2. class Solution(object):
+    def productExceptSelf(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        n = len(nums)
+        res = []
+        for i in range(n):
+            product = 1
+            for j in range(n):
+                if i != j:
+                    product *= nums[j]
+            res.append(product)
+        return res
