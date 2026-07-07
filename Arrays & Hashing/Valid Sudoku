@@ -1,0 +1,72 @@
+##Lowering the for loops
+
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        rows = {i: set() for i in range(9)}
+        cols = {i: set() for i in range(9)}
+        boxes = {i: set() for i in range(9)}
+
+        for i in range(9):
+            for j in range(9):
+                val = board[i][j]
+                if val == ".":
+                    continue
+
+                # Row check
+                if val in rows[i]:
+                    return False
+                rows[i].add(val)
+
+                # Column check
+                if val in cols[j]:
+                    return False
+                cols[j].add(val)
+
+                # Box check
+                box_ind = (i // 3) * 3 + (j // 3)
+                if val in boxes[box_ind]:
+                    return False
+                boxes[box_ind].add(val)
+
+        return True
+
+
+
+
+
+## My own written code
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        hmR={}
+        hmC={}
+        hmB={}
+
+        for i in range(len(board)):
+            hsR=set()
+            for j in range(len(board[i])):
+                if board[i][j]!=".":
+                    if board[i][j] in hsR:
+                        return False
+                    hsR.add(board[i][j])
+            hmR[i]=(hsR)
+        
+        for i in range(len(board)):
+            hsC=set()
+            for j in range(len(board[i])):
+                if board[j][i]!=".":
+                    if board[j][i] in hsC:
+                        return False
+                    hsC.add(board[j][i])
+            hmC[i]=(hsC)
+
+        for i in range(len(board)):
+            for j in range(len(board[i])):
+                if board[i][j]!=".":
+                    box_ind=3*(i//3)+(j//3)
+                    if box_ind not in hmB:
+                        hmB[box_ind]=set()
+                    if board[i][j] in hmB[box_ind]:
+                        return False
+                    hmB[box_ind].add(board[i][j])
+        return True
+        
