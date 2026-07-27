@@ -1,0 +1,52 @@
+## general bruteforce which uses extra space and a built in .isalnum() function
+
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        s1=''
+        for i in s:
+            if i.isalnum():
+                s1+=i.lower()
+        return s1==s1[::-1]
+
+## two pointers approach -- wrote an extra func, also can use inbuilt func
+
+class Solution(object):
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+
+        l=0
+        r=len(s)-1
+
+        while l<r:
+            while l<r and not self.isalpnum(s[l]):
+                l+=1
+            while r>l and not self.isalpnum(s[r]):
+                r-=1
+            if s[l].lower()!=s[r].lower():
+                return False
+            l,r=l+1,r-1
+        return True       
+
+    def isalpnum(self,s):
+        return (ord('a')<=ord(s)<=ord('z') or
+        ord('A')<=ord(s)<=ord('Z') or
+        ord('0')<=ord(s)<=ord('9'))
+
+
+
+
+## LC trick
+class Solution(object):
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        s1 = s.lower()
+        l= [' ','!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~']
+        for i in l:
+            s1 = s1.replace(i,"")
+        return s1 == s1[::-1]
