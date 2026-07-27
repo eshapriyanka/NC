@@ -1,0 +1,77 @@
+## bruteforce -- TLE (this can be used for an unsorted array as well). TC: O(n^2)
+class Solution(object):
+    def twoSum(self, numbers, target):
+        """
+        :type numbers: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        for i in range(len(numbers)): 
+            for j in range(i+1,len(numbers)):
+                if numbers[i]+numbers[j]==target:
+                    return [i+1,j+1]
+
+
+## Using Binary Search -- TLE.  TC: O(log n) *n < O(n^2)
+
+class Solution(object):
+    def twoSum(self, numbers, target):
+        """
+        :type numbers: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        for i in range(len(numbers)):
+            x=target-numbers[i]
+
+            l,r=0,len(numbers)-1
+            mid=(l+r)//2
+
+            while l<r:
+                if x>numbers[mid]:
+                    l=mid+1
+                    if numbers[l]==x:
+                        return [i+1,l+1]
+                elif x<numbers[mid]:
+                    r=mid-1
+                    if numbers[r]==x:
+                        return [i+1,r+1]
+                else:
+                    return [i+1,mid+1]
+
+## Using hashmap. TC: O(1)*n = O(n); SC: O(n) - HM with n eles
+class Solution(object):
+    def twoSum(self, numbers, target):
+        """
+        :type numbers: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        hm={}
+        for i in range(len(numbers)):
+            x=target-numbers[i]
+            if x not in hm:
+                hm[numbers[i]]=i
+            else:
+                return [hm[x]+1,i+1]
+
+
+
+## two pointers. TC: O(n)
+
+class Solution(object):
+    def twoSum(self, numbers, target):
+        """
+        :type numbers: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        l,r=0,len(numbers)-1
+        while l<r:
+            if numbers[l]+numbers[r]==target:
+                return [l+1,r+1]
+            elif numbers[l]+numbers[r]<target:
+                l+=1
+            else:
+                r-=1
+        
