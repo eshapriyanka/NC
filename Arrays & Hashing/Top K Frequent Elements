@@ -13,17 +13,6 @@ class Solution(object):
                 hm[nums[i]]+=1
             else:
                 hm[nums[i]]=1
-        
-        hm1={}
-        maxval=0
-        for key,value in hm.items():
-            if value in hm1:
-                hm1[value].append(key)
-            else:
-                hm1[value]=[key]
-            
-            if value>maxval:
-                maxval=value
 
         a=sorted(hm.items(), key=lambda x:x[1])
         return [x[0] for x in a[-k:]]
