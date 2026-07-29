@@ -77,4 +77,4 @@ class Solution(object):
                     r-=1
                 else:
                     l+=1
-        return [list(tri) for tri in res]
+        return res
