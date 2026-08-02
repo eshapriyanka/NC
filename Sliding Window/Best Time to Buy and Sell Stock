@@ -1,0 +1,31 @@
+## Bruteforce -- TLE. TC:O(N*N)=O(N^2)
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        maxpft=0
+        for i in range(len(prices)):
+            for j in range(i+1, len(prices)):
+                if prices[j]-prices[i]>maxpft:
+                    maxpft=prices[j]-prices[i]
+        return maxpft
+
+## Two Pointers - TC: O(N)
+
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        maxpft=0
+        i,j=0,1
+        while j<len(prices):
+            if prices[j]-prices[i]>maxpft:
+                maxpft=prices[j]-prices[i]
+            if prices[j]<prices[i]:
+                i=j
+            j+=1
+        return maxpft
